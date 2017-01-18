@@ -30,7 +30,6 @@
       border-bottom:0;
     }
 
-
     input:checked + p {
       background:#F9F9F9;
       text-decoration: line-through;
@@ -104,6 +103,32 @@
   </div>
 
 <script>
+  const checkboxes = document.querySelectorAll('.inbox input[type="checkbox"]')
+  let lastChecked;
+
+  function handleCheck(e) {
+    let inBetween = false;
+
+    if(e.shiftKey && this.checked) {
+      checkboxes.forEach(checkbox => {
+        if(checkbox === this || checkbox === lastChecked) {
+          inBetween = !inBetween;
+        }
+
+        if(inBetween) {
+          checkbox.checked = true;
+        }
+      });
+    }
+
+    lastChecked = this;
+  }
+  checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheck));
+  document.addEventListener('keydown', e => {
+    if (e.keyCode !== 16) return;
+
+    console.log(e.keyCode);
+  });
 </script>
 </body>
 </html>
