@@ -182,6 +182,29 @@
     </li>
   </ul>
 <script>
+const elements = [...document.querySelectorAll('[data-time]')];
+const seconds = elements
+    .map(el => el.dataset.time)
+    .map(time => {
+        const [mins, secs] = time.split(":");
+        return mins*60 + parseInt(secs);
+      })
+    .reduce((total, sec) => total + sec);
+
+function secondsToHourMinsSecs(totalSeconds) {
+  let secondsLeft = totalSeconds;
+  const hours = Math.floor(secondsLeft/3600);
+  secondsLeft = secondsLeft % 3600;
+
+  const mins = Math.floor(secondsLeft / 60);
+  secondsLeft = secondsLeft % 60;
+  const secs = secondsLeft;
+  return [hours, mins, secs].join(" ");
+}
+
+
+console.log(secondsToHourMinsSecs(seconds))
+
 </script>
 </body>
 </html>
